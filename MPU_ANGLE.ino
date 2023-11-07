@@ -1,7 +1,5 @@
 #include <Wire.h>
 #define MPU_ADDR 0x68
-#define A 0.962
-#define dt 0.020
 
 int x, y;
 
@@ -20,7 +18,6 @@ void setup() {
 
 void loop() {  
   readRawAccel();
-  readRawGyro();
   calcLSB();
 }
 
@@ -69,21 +66,4 @@ void calcLSB() {
   accel_x = accel_x / 16384;
   accel_y = accel_x / 16384;
   accel_z = accel_x / 16384;
-
-  gyro_x = gyro_x / 131;
-  gyro_y = gyro_y / 131;
-  gyro_z = gyro_z / 131;
-}
-
-void readRawGyro() {
-  bacaByte(MPU_ADDR, 0x3B, 6);
-//  Wire.beginTransmission(MPU_ADDR);
-//  Wire.write(0x3B); // mulai pembacaan accel
-//  Wire.endTransmission();
-//  while (Wire.available() < 6) {
-//    Wire.requestFrom(MPU_ADDR, 6);
-    gyro_x = Wire.read() << 8 | Wire.read();
-    gyro_y = Wire.read() << 8 | Wire.read();
-    gyro_z = Wire.read() << 8 | Wire.read();
-//  }
 }
